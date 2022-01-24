@@ -30,26 +30,25 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<Object> getCart(String cartId) {
-        return (List<Object>) cartRedisRepository.getCart(cartId, Item.class);
+    public List<Item> getCart(String cartId) {
+        return cartRedisRepository.getCart(cartId, Item.class);
     }
 
     @Override
     public void changeItemQuantity(String cartId, Long productId, Integer quantity) {
-        List<Item> cart = (List) cartRedisRepository.getCart(cartId, Item.class);
-        for (Item item : cart) {
-            if ((item.getProduct().getId()).equals(productId)) {
-                cartRedisRepository.deleteItemFromCart(cartId, item);
-                item.setQuantity(quantity);
-                item.setSubTotal(CartUtilities.getSubTotalForItem(item.getProduct(), quantity));
-                cartRedisRepository.addItemToCart(cartId, item);
-            }
-        }
+        List<Item> cart = cartRedisRepository.getCart(cartId, Item.class);
+        cart.stream().filter(item -> item.getProduct().getId().equals(productId))
+                .forEach(item -> {
+                    cartRedisRepository.deleteItemFromCart(cartId, item);
+                    item.setQuantity(quantity);
+                    item.setSubTotal(CartUtilities.getSubTotalForItem(item.getProduct(), quantity));
+                    cartRedisRepository.addItemToCart(cartId, item);
+                });
     }
 
     @Override
     public void deleteItemFromCart(String cartId, Long productId) {
-        List<Item> cart = (List) cartRedisRepository.getCart(cartId, Item.class);
+        List<Item> cart = cartRedisRepository.getCart(cartId, Item.class);
         for (Item item : cart) {
             if ((item.getProduct().getId()).equals(productId)) {
                 cartRedisRepository.deleteItemFromCart(cartId, item);
@@ -59,7 +58,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public boolean checkIfItemIsExist(String cartId, Long productId) {
-        List<Item> cart = (List) cartRedisRepository.getCart(cartId, Item.class);
+        List<Item> cart = cartRedisRepository.getCart(cartId, Item.class);
         for (Item item : cart) {
             if ((item.getProduct().getId()).equals(productId)) {
                 return true;
@@ -70,8 +69,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<Item> getAllItemsFromCart(String cartId) {
-        List<Item> items = (List) cartRedisRepository.getCart(cartId, Item.class);
-        return items;
+        return cartRedisRepository.getCart(cartId, Item.class);
     }
 
     @Override

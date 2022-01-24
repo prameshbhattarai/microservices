@@ -1,11 +1,11 @@
 package com.orderservice.repository;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface CartRedisRepository {
 
     void addItemToCart(String key, Object item);
-    Collection<Object> getCart(String key, Class type);
+    <T> List<T> getCart(String key, Class<T> type);
     void deleteItemFromCart(String key, Object item);
     void deleteCart(String key);
 

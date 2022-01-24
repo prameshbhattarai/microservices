@@ -8,7 +8,7 @@ public interface CartService {
 
     void addItemToCart(String cartId, Long productId, Integer quantity);
 
-    List<Object> getCart(String cartId);
+    List<Item> getCart(String cartId);
 
     void changeItemQuantity(String cartId, Long productId, Integer quantity);
 

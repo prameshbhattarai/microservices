@@ -9,6 +9,7 @@ import redis.clients.jedis.Jedis;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public class CartRedisRepositoryImpl implements CartRedisRepository {
@@ -33,8 +34,8 @@ public class CartRedisRepositoryImpl implements CartRedisRepository {
     }
 
     @Override
-    public Collection<Object> getCart(String key, Class type) {
-        Collection<Object> cart = new ArrayList<>();
+    public <T> List<T> getCart(String key, Class<T> type) {
+        List<T> cart = new ArrayList<>();
         for (String smember : jedis.smembers(key)) {
             try {
                 cart.add(objectMapper.readValue(smember, type));
