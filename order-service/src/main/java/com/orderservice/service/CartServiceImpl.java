@@ -3,7 +3,7 @@ package com.orderservice.service;
 import com.orderservice.entity.Item;
 import com.orderservice.entity.Product;
 import com.orderservice.feignClient.ProductClient;
-import com.orderservice.repository.CartRedisRepository;
+import com.orderservice.redisRepository.CartRedisRepository;
 import com.orderservice.utils.CartUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

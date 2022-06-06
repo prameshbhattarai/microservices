@@ -1,4 +1,4 @@
-package com.orderservice.repository;
+package com.orderservice.redisRepository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

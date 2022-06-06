@@ -1,4 +1,4 @@
-package com.orderservice.repository;
+package com.orderservice.redisRepository;
 
 import java.util.List;
 
