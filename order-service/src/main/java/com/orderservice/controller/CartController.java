@@ -21,7 +21,7 @@ public class CartController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Item>> getCart(@RequestHeader(value = "Cookie") String cartId) {
+    public ResponseEntity<List<Item>> getCart(@RequestHeader(value = "CartId") String cartId) {
         List<Item> cart = cartService.getCart(cartId);
         if (!cart.isEmpty()) {
             return new ResponseEntity<List<Item>>(cart, HttpStatus.OK);
@@ -32,7 +32,7 @@ public class CartController {
     @PostMapping(params = {"productId, quantity"})
     public ResponseEntity<List<Item>> addItemToCart(@RequestParam("productId") Long productId,
                                                     @RequestParam("quantity") Integer quantity,
-                                                    @RequestHeader(value = "Cookie") String cartId) {
+                                                    @RequestHeader(value = "CartId") String cartId) {
         List<Item> cart = cartService.getCart(cartId);
         if (cart != null) {
             if (cartService.checkIfItemIsExist(cartId, productId)) {
@@ -48,7 +48,7 @@ public class CartController {
 
     @DeleteMapping(params = "productId")
     public ResponseEntity<Void> removeItemFromCart(@RequestParam("productId") Long productId,
-                                                   @RequestHeader(value = "Cookie") String cartId) {
+                                                   @RequestHeader(value = "CartId") String cartId) {
         List<Item> cart = cartService.getCart(cartId);
         if (cart != null) {
             cartService.deleteItemFromCart(cartId, productId);

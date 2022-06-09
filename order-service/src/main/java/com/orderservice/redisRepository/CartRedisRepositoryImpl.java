@@ -2,26 +2,18 @@ package com.orderservice.redisRepository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Repository
 public class CartRedisRepositoryImpl implements CartRedisRepository {
 
-    private final Jedis jedis;
-    private final ObjectMapper objectMapper;
-
-    @Autowired
-    public CartRedisRepositoryImpl(Jedis jedis, ObjectMapper objectMapper) {
-        this.jedis = jedis;
-        this.objectMapper = objectMapper;
-    }
+    private final Jedis jedis = new Jedis();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void addItemToCart(String key, Object item) {
