@@ -7,6 +7,7 @@ import com.orderservice.feignClient.UserClient;
 import com.orderservice.service.CartService;
 import com.orderservice.service.OrderService;
 import com.orderservice.utils.OrderUtilities;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/order")
+@Log4j2
 public class OrderController {
 
     private final UserClient userClient;
@@ -41,12 +43,18 @@ public class OrderController {
             try {
                 orderService.saveOrder(order);
                 cartService.deleteCart(cartId);
+                log.info("Successfully saved order for user: {}", user.getUserName());
                 return new ResponseEntity<>(order, HttpStatus.CREATED);
             } catch (Exception ex) {
-                ex.printStackTrace();;
+                log.error("Unable to save order for user: {}", user.getUserName(), ex);
+                ex.printStackTrace();
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
+
+        if (cart == null) log.error("Unable to find cart by id: {}", cartId);
+        if (user == null) log.error("Unable to find user by id: {}", userId);
+
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
