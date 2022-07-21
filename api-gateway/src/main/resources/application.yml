@@ -1,0 +1,52 @@
+eureka:
+  client:
+    healthcheck:
+      enabled: 'true'
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+    fetch-registry: 'true'
+    register-with-eureka: 'true'
+  instance:
+    hostname: localhost
+    port: '8761'
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: 'true'
+          lower-case-service-id: 'true'
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api-gateway/accounts/**
+            
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api-gateway/shop/**
+            
+        - id: product-recommendation-service
+          uri: lb://product-recommendation-service
+          predicates:
+            - Path=/api-gateway/review/**
+            
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api-gateway/catalog/**
+  application:
+    name: api-gateway
+  main:
+    web-application-type: reactive
+server:
+  port: '8900'
+  
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG

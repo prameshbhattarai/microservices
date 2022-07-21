@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: user-service
+  datasource:
+    driverClassName: org.h2.Driver
+    password: password
+    username: sa
+    url: jdbc:h2:mem:users
+  jpa:
+    defer-datasource-initialization: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: 'true'
+  sql:
+    init:
+      mode: always
+error:
+  '406':
+    schema:
+      details: This request is not acceptable. Supported MIME types are application/json
+  '404':
+    schema:
+      details: The resource you are looking for might have been removed, had its name
+        changed, or is temporarily unavailable
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+server:
+  port: 8811
+  
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG
