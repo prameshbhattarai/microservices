@@ -1,15 +1,15 @@
 spring:
   application:
-    name: user-service
+    name: product-service
     
   # DATASOURCE
   datasource:
     driverClassName: org.h2.Driver
     password: password
     username: sa
-    url: jdbc:h2:mem:users
+    url: jdbc:h2:mem:products
     
-  # JPA
+  # JPA:
   jpa:
     defer-datasource-initialization: 'true'
     show-sql: 'true'
@@ -22,17 +22,7 @@ spring:
   sql:
     init:
       mode: always
-
-# 406 and 404 ERROR MESSAGE 
-error:
-  '406':
-    schema:
-      details: This request is not acceptable. Supported MIME types are application/json
-  '404':
-    schema:
-      details: The resource you are looking for might have been removed, had its name
-        changed, or is temporarily unavailable
-
+      
 # EUREKA SERVER REGISTRATION
 eureka:
   client:
@@ -41,7 +31,7 @@ eureka:
       
 # SERVER DETAILS
 server:
-  port: 8811
+  port: '8810'
   
 # LOG ALL HTTP REQUEST
 logging:

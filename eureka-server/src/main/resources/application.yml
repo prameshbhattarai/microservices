@@ -1,0 +1,16 @@
+# EUREKA CLIENT REGISTRATION CONFIG
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    fetch-registry: 'false'
+    register-with-eureka: 'false'
+  instance:
+    hostname: localhost
+    
+# SERVER DETAILS
+spring:
+  application:
+    name: eureka-server
+server:
+  port: '8761'
